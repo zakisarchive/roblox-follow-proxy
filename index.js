@@ -1,7 +1,11 @@
+// Import required modules
 const express = require('express');
 const axios = require('axios');
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Simple delay function (in milliseconds)
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 // When someone goes to /checkfollowing
 app.get('/checkfollowing', async (req, res) => {
@@ -13,6 +17,9 @@ app.get('/checkfollowing', async (req, res) => {
     }
 
     try {
+        // Introduce a small delay to avoid hitting rate limits
+        await delay(1000); // 1 second delay
+
         // Call Roblox API
         const response = await axios.get(`https://friends.roblox.com/v1/users/${userid}/followings`);
 
